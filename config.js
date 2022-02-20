@@ -3,10 +3,11 @@ dotenv.config();
 
 const config = {
   db: {
-    host: "127.0.0.1",
-    user: "root",
-    password: "",
-    database: "expresstest",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    multipleStatements: true,
   },
   listPerPage: 10,
 };
