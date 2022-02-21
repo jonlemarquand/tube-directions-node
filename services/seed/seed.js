@@ -10,9 +10,23 @@ seed.data.forEach(item => {
 });
 
 seed.data.forEach(item => {
-	seedQuery = seedQuery + `CREATE TABLE IF NOT EXISTS ${item.title} (${item.data}); `;
+	seedQuery = seedQuery + `CREATE TABLE IF NOT EXISTS ${item.title} (${item.columns}); `;
 	console.log(`Creating ${item.title}`);
-})
+});
+
+seed.data.forEach(item => {
+	if(item.data) {
+		let seedData = '';
+		item.data.content.forEach((i, index, data) => {
+			if(index === data.length - 1) {
+				seedData = seedData + '(' + data[index] + ');'
+			} else {
+				seedData = seedData + '(' + data[index] + '),'
+			}
+		});
+		seedQuery = seedQuery + `INSERT INTO ${item.title} (${item.data.headers}) VALUES ${seedData}`;
+	}
+});
 
 const connection = mysql.createConnection({
 	host: process.env.DB_HOST,
