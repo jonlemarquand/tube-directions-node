@@ -11,9 +11,8 @@ seed.data.forEach(item => {
 
 seed.data.forEach(item => {
 	seedQuery = seedQuery + `CREATE TABLE IF NOT EXISTS ${item.title} (${item.data}); `;
+	console.log(`Creating ${item.title}`);
 })
-
-console.log(seedQuery);
 
 const connection = mysql.createConnection({
 	host: process.env.DB_HOST,
@@ -30,6 +29,6 @@ connection.query(seedQuery, [], err => {
 		throw err
 	};
 
-	console.log("Seeding happening");
+	console.log("Seeding complete");
 	connection.end();
 })
